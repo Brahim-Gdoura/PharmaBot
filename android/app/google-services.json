@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "85024601034",
+    "project_id": "my-pharmabot-app",
+    "storage_bucket": "my-pharmabot-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85024601034:android:6a33b6f8755249c0845533",
+        "android_client_info": {
+          "package_name": "com.example.pharma_bot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsxBQTCbtJ-mPllzB-R2KklYkTMmv4tuU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
