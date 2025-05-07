@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharma_bot/pages/auth/login_page.dart';
+import 'package:pharma_bot/pages/pharmacy/principle_page.dart';
 import 'package:pharma_bot/services/auth.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -25,11 +26,22 @@ class _RegisterPageState extends State<RegisterPage> {
       );
 
       if (result == "success") {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const principlePage(),
+          ),
+          (route) => false,
+        );
       } else {
-        print(result);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(result)),
+        );
       }
     } on Exception catch (e) {
-      print(e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
     }
   }
 
