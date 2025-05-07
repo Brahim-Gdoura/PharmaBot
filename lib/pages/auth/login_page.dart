@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pharma_bot/models/user.dart';
 import 'package:pharma_bot/pages/auth/register_page.dart';
+import 'package:pharma_bot/pages/pharmacy/admin_page.dart';
+import 'package:pharma_bot/pages/pharmacy/principle_page.dart';
+import 'package:pharma_bot/services/auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,6 +15,39 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  signIn() async {
+    try {
+      String result = await AuthMethods().signIn(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      if (result == "success") {
+        UserModel? user = await AuthMethods().getUserDetails();
+        if (user != null) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => user.role == "admin"
+                  ? const AdminPage()
+                  : const principlePage(),
+            ),
+            (route) => false,
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(result)),
+        );
+      }
+    } on Exception catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.symmetric(vertical: 16),
                     ),
                     onPressed: () {
-                      print('LOGIN');
+                      signIn();
                     },
                     child: const Text(
                       'LOGIN',

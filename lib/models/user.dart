@@ -3,14 +3,14 @@ class UserModel {
   String? displayName;
   String? username;
   String? email;
-  //String? profilePicture;
+  String? role;
 
   UserModel({
     required this.uid,
     required this.displayName,
     required this.username,
     required this.email,
-    //required this.profilePicture,
+    required this.role,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -18,7 +18,7 @@ class UserModel {
     displayName = json['name'];
     username = json['username'];
     email = json['email'];
-    //profilePicture = json['profile_picture'];
+    role = json['role'];
   }
 
   Map<String, dynamic> toJson() {
@@ -27,7 +27,7 @@ class UserModel {
     data['name'] = displayName;
     data['username'] = username;
     data['email'] = email;
-    //data['profile_picture'] = profilePicture;
+    data['role'] = role;
     return data;
   }
 }
