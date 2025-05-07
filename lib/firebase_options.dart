@@ -59,4 +59,5 @@ class DefaultFirebaseOptions {
     projectId: 'my-pharmabot-app',
     storageBucket: 'my-pharmabot-app.firebasestorage.app',
   );
+
 }

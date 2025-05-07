@@ -106,8 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       hintText: 'Username',
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius:
-                            BorderRadius.circular(16), // 👈 ici, c'est correct
+                        borderRadius: BorderRadius.circular(16),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
