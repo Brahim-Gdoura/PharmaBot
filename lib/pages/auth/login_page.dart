@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pharma_bot/models/user.dart';
 import 'package:pharma_bot/pages/auth/register_page.dart';
-import 'package:pharma_bot/pages/pharmacy/admin_page.dart';
-import 'package:pharma_bot/pages/pharmacy/principle_page.dart';
+import 'package:pharma_bot/pages/pharmacy/layout_admin.dart';
+import 'package:pharma_bot/pages/pharmacy/layout_user.dart';
 import 'package:pharma_bot/services/auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -30,8 +30,8 @@ class _LoginPageState extends State<LoginPage> {
             context,
             MaterialPageRoute(
               builder: (context) => user.role == "admin"
-                  ? const AdminPage()
-                  : const principlePage(),
+                  ? const LayoutAdmin()
+                  : const LayoutUser(),
             ),
             (route) => false,
           );

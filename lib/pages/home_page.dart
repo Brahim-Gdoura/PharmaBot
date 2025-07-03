@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pharma_bot/pages/auth/login_page.dart';
 import 'package:pharma_bot/pages/auth/register_page.dart';
+import 'package:pharma_bot/pages/pharmacy/add_medicine_page.dart';
+import 'package:pharma_bot/pages/pharmacy/admine_page.dart';
+import 'package:pharma_bot/pages/pharmacy/display_medicine.dart';
+import 'package:pharma_bot/pages/pharmacy/layout_admin.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -106,7 +110,12 @@ class HomePage extends StatelessWidget {
                 Center(
                   child: GestureDetector(
                     onTap: () {
-                      print("Not thanks tapped");
+                      print("No thanks tapped");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage()),
+                      );
                     },
                     child: const Text(
                       'Not thanks',

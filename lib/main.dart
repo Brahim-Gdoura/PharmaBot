@@ -4,7 +4,9 @@ import 'package:pharma_bot/models/user.dart';
 import 'package:pharma_bot/pages/auth/login_page.dart';
 import 'package:pharma_bot/pages/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:pharma_bot/pages/pharmacy/admin_page.dart';
+import 'package:pharma_bot/pages/pharmacy/admine_page.dart';
+import 'package:pharma_bot/pages/pharmacy/layout_admin.dart';
+import 'package:pharma_bot/pages/pharmacy/layout_user.dart';
 import 'package:pharma_bot/pages/pharmacy/principle_page.dart';
 import 'package:pharma_bot/services/auth.dart';
 import 'firebase_options.dart';
@@ -40,8 +42,8 @@ class PharmaBot extends StatelessWidget {
                 } else if (userSnapshot.hasData) {
                   // Redirection en fonction du rôle
                   return userSnapshot.data!.role == "admin"
-                      ? const AdminPage()
-                      : const principlePage();
+                      ? const LayoutAdmin()
+                      : const LayoutUser();
                 }
                 return const LoginPage();
               },

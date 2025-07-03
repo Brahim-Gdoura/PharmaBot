@@ -5,18 +5,18 @@ import 'package:pharma_bot/models/medicine.dart';
 import 'package:pharma_bot/models/user.dart';
 import 'package:pharma_bot/pages/home_page.dart';
 import 'package:pharma_bot/pages/pharmacy/display_medicine.dart';
-import 'package:pharma_bot/services/auth.dart';
 import 'package:pharma_bot/services/medicine_service.dart';
-import 'package:pharma_bot/widgets/medicine_card.dart'; // Assurez-vous d'importer votre HomePage
+import 'package:pharma_bot/widgets/medicine_card.dart';
+import 'package:pharma_bot/services/auth.dart';
 
-class principlePage extends StatefulWidget {
-  const principlePage({super.key});
+class AdminPage extends StatefulWidget {
+  const AdminPage({super.key});
 
   @override
-  State<principlePage> createState() => _PrinciplePageState();
+  State<AdminPage> createState() => _AdminPage();
 }
 
-class _PrinciplePageState extends State<principlePage> {
+class _AdminPage extends State<AdminPage> {
   final MedicineService _medicineService = MedicineService();
 
   UserModel? user;
@@ -289,6 +289,7 @@ class _PrinciplePageState extends State<principlePage> {
                                   MaterialPageRoute(
                                     builder: (context) => MedicineDetailPage(
                                       medicine: medicines[index],
+                                      role: user?.role,
                                     ),
                                   ),
                                 );
