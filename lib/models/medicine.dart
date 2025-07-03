@@ -18,7 +18,7 @@ class Medicine {
     required this.imageUrl,
     required this.manufacturer,
     required this.price,
-    this.category = 'General',
+    required this.category,
   });
 
   Map<String, dynamic> toMap() => {

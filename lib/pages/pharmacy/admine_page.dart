@@ -1,20 +1,37 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pharma_bot/models/medicine.dart';
+import 'package:pharma_bot/models/user.dart';
+import 'package:pharma_bot/pages/home_page.dart';
+import 'package:pharma_bot/pages/pharmacy/display_medicine.dart';
 import 'package:pharma_bot/services/medicine_service.dart';
 import 'package:pharma_bot/widgets/medicine_card.dart';
+import 'package:pharma_bot/services/auth.dart';
 
-class HomePage2 extends StatefulWidget {
-  const HomePage2({super.key});
+class AdminPage extends StatefulWidget {
+  const AdminPage({super.key});
 
   @override
-  State<HomePage2> createState() => _HomePage2State();
+  State<AdminPage> createState() => _AdminPage();
 }
 
-class _HomePage2State extends State<HomePage2> {
+class _AdminPage extends State<AdminPage> {
   final MedicineService _medicineService = MedicineService();
 
-  // Liste des catégories à afficher
+  UserModel? user;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  void loadUserData() async {
+    user = await AuthMethods().getUserDetails();
+    setState(() {});
+  }
+
   final List<String> _categoryNames = [
     "All",
     "Teeth",
@@ -24,7 +41,6 @@ class _HomePage2State extends State<HomePage2> {
     "Ears",
   ];
 
-  // Icônes correspondant à chaque catégorie
   final List<Icon> _categoryIcons = [
     const Icon(Icons.category, size: 30, color: Colors.blue),
     Icon(MdiIcons.tooth, size: 30, color: Colors.blue),
@@ -34,10 +50,27 @@ class _HomePage2State extends State<HomePage2> {
     Icon(MdiIcons.earHearing, size: 30, color: Colors.blue),
   ];
 
-  // Catégorie actuellement sélectionnée
   String _selectedCategory = "All";
   String _searchQuery = "";
   final TextEditingController _searchController = TextEditingController();
+
+  Future<void> _signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      // Redirection vers HomePage après déconnexion réussie
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+        (route) => false, // Supprime toutes les routes précédentes
+      );
+    } catch (e) {
+      print("Erreur lors de la déconnexion: ${e.toString()}");
+      // Vous pouvez ajouter un SnackBar pour afficher l'erreur à l'utilisateur
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Échec de la déconnexion: ${e.toString()}")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +79,6 @@ class _HomePage2State extends State<HomePage2> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            // Bandeau supérieur coloré
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 3.5,
@@ -65,35 +97,41 @@ class _HomePage2State extends State<HomePage2> {
                 ),
               ),
             ),
-
-            // Contenu principal
             Padding(
               padding: const EdgeInsets.only(top: 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Header utilisateur
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CircleAvatar(
+                            const CircleAvatar(
                               radius: 30,
                               backgroundImage:
                                   AssetImage('assets/images/user.jpg'),
                             ),
-                            Icon(Icons.logout_outlined,
-                                size: 30, color: Colors.black),
+                            GestureDetector(
+                              onTap: () => _signOut(),
+                              child: const Icon(
+                                Icons.logout_outlined,
+                                size: 30,
+                                color: Colors.black,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 15),
-                        const Text(
-                          "Hello, User!",
-                          style: TextStyle(fontSize: 18, color: Colors.black),
+                        Text(
+                          "Hello, ${user?.displayName ?? 'User'}!",
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Colors.black),
                         ),
                         const SizedBox(height: 10),
                         const Text(
@@ -105,8 +143,6 @@ class _HomePage2State extends State<HomePage2> {
                             fontStyle: FontStyle.italic,
                           ),
                         ),
-
-                        // Barre de recherche (non fonctionnelle pour l'instant)
                         Container(
                           margin: const EdgeInsets.only(top: 15, bottom: 20),
                           height: 55,
@@ -141,8 +177,6 @@ class _HomePage2State extends State<HomePage2> {
                       ],
                     ),
                   ),
-
-                  // Section des catégories
                   const Padding(
                     padding: EdgeInsets.only(left: 15),
                     child: Text(
@@ -155,8 +189,6 @@ class _HomePage2State extends State<HomePage2> {
                     ),
                   ),
                   const SizedBox(height: 15),
-
-                  // Liste horizontale des catégories
                   SizedBox(
                     height: 100,
                     child: ListView.builder(
@@ -209,10 +241,7 @@ class _HomePage2State extends State<HomePage2> {
                       },
                     ),
                   ),
-
                   const SizedBox(height: 30),
-
-                  // Titre de la section des médicaments
                   const Padding(
                     padding: EdgeInsets.only(left: 15),
                     child: Text(
@@ -224,8 +253,6 @@ class _HomePage2State extends State<HomePage2> {
                       ),
                     ),
                   ),
-
-                  // Liste des médicaments filtrés
                   SizedBox(
                     height: 220,
                     child: StreamBuilder<List<Medicine>>(
@@ -257,7 +284,15 @@ class _HomePage2State extends State<HomePage2> {
                             return MedicineCard(
                               medicine: medicines[index],
                               onTap: () {
-                                // Redirection vers une page détail possible ici
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MedicineDetailPage(
+                                      medicine: medicines[index],
+                                      role: user?.role,
+                                    ),
+                                  ),
+                                );
                               },
                             );
                           },
@@ -267,7 +302,7 @@ class _HomePage2State extends State<HomePage2> {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

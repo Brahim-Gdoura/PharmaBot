@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharma_bot/pages/pharmacy/add_medicine_page.dart';
 import 'package:pharma_bot/pages/pharmacy/chat_bot.dart';
-import 'package:pharma_bot/pages/pharmacy/home_page2.dart';
+import 'package:pharma_bot/pages/pharmacy/admine_page.dart';
 
 class LayoutAdmin extends StatefulWidget {
   const LayoutAdmin({super.key});
@@ -15,7 +15,7 @@ class _LayoutAdmin extends State<LayoutAdmin> {
 
   @override
   Widget build(BuildContext context) {
-    List myPages = [HomePage2(), ChatBot(), AddMedicinePage()];
+    List myPages = [AdminPage(), ChatBot(), AddMedicinePage()];
 
     return Scaffold(
         body: myPages[currentIndex],

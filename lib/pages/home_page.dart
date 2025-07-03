@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pharma_bot/pages/auth/login_page.dart';
 import 'package:pharma_bot/pages/auth/register_page.dart';
 import 'package:pharma_bot/pages/pharmacy/add_medicine_page.dart';
-import 'package:pharma_bot/pages/pharmacy/home_page2.dart';
+import 'package:pharma_bot/pages/pharmacy/admine_page.dart';
+import 'package:pharma_bot/pages/pharmacy/display_medicine.dart';
 import 'package:pharma_bot/pages/pharmacy/layout_admin.dart';
 
 class HomePage extends StatelessWidget {
@@ -113,7 +114,7 @@ class HomePage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const LayoutAdmin()),
+                            builder: (context) => const HomePage()),
                       );
                     },
                     child: const Text(

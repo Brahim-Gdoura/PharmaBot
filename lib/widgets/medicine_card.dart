@@ -94,6 +94,8 @@ class MedicineCard extends StatelessWidget {
                             color: Colors.green,
                           ),
                         ),
+                        const SizedBox(height: 10),
+                        // Boutons d'action
                       ],
                     ),
                   ],

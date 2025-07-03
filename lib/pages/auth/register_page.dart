@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharma_bot/pages/auth/login_page.dart';
+import 'package:pharma_bot/pages/pharmacy/layout_user.dart';
 import 'package:pharma_bot/pages/pharmacy/principle_page.dart';
 import 'package:pharma_bot/services/auth.dart';
 
@@ -29,7 +30,7 @@ class _RegisterPageState extends State<RegisterPage> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => const principlePage(),
+            builder: (context) => const LayoutUser(),
           ),
           (route) => false,
         );

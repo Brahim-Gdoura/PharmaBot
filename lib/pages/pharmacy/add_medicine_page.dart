@@ -31,7 +31,8 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
         sideEffects: _sideEffectsController.text,
         imageUrl: _imageUrlController.text,
         manufacturer: _manufacturerController.text,
-        category: 'General', // Default category, can be changed later
+        category:
+            _categoryController.text, // Default category, can be changed later
         price: 0.0, // Default price, can be set later
       );
 
